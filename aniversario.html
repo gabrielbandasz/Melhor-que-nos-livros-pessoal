@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>21 de Junho — Um Ano</title>
+<link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Pinyon+Script&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Jost:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+
+:root{
+  --cream:#faf5ec;
+  --cream2:#f3ead9;
+  --gold:#c9a96e;
+  --gold2:#e3cd9a;
+  --blue:#cfe0ea;
+  --blue2:#a9c4d6;
+  --ink:#241509;
+  --ink2:#5c4631;
+  --rose:#b5534a;
+  --dark:#0e0905;
+  --dark2:#1c120a;
+}
+
+html{scroll-behavior:smooth;background:var(--dark);}
+body{
+  font-family:'EB Garamond',serif;
+  background:var(--cream);
+  color:var(--ink);
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  width:100%;
+}
+
+img{max-width:100%;display:block;}
+
+/* grain overlay everywhere */
+body::before{
+  content:'';
+  position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9999;mix-blend-mode:multiply;
+}
+
+/* ───────────────────────────────
+   FLOATING PARTICLES (subtle)
+─────────────────────────────── */
+#particles{position:fixed;inset:0;pointer-events:none;z-index:2;overflow:hidden;}
+.particle{
+  position:absolute;border-radius:50%;
+  background:radial-gradient(circle,rgba(201,169,110,.5),transparent 70%);
+  opacity:0;animation:floatUp linear infinite;
+}
+@keyframes floatUp{
+  0%{opacity:0;transform:translateY(0) translateX(0);}
+  10%{opacity:.6;}
+  90%{opacity:.3;}
+  100%{opacity:0;transform:translateY(-100vh) translateX(20px);}
+}
+
+/* ═══════════════════════════════════════
+   ENTRY SCREEN  (mobile-first)
+═══════════════════════════════════════ */
+#entry{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;
+  background:#0e0905;
+  transition:opacity 1.2s ease, visibility 1.2s ease;
+  height:100dvh;
+}
+#entry.hidden{opacity:0;visibility:hidden;pointer-events:none;}
+
+#entry-bg{
+  position:absolute;inset:0;
+  background-size:cover;background-position:center;
+  filter:blur(14px) brightness(.35) saturate(1.1);
+  transform:scale(1.15);
+}
+#entry-bg::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 50%,rgba(14,9,5,.4) 0%,rgba(14,9,5,.88) 100%);
+}
+
+.entry-content{position:relative;z-index:2;padding:24px;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%;max-width:380px;}
+
+.entry-eyebrow{
+  font-family:'Jost',sans-serif;font-weight:300;font-size:9px;
+  letter-spacing:4px;text-transform:uppercase;color:var(--gold2);
+  opacity:0;animation:fadeUp 1.2s ease .3s forwards;
+}
+.entry-date{
+  font-family:'Libre Baskerville',serif;font-style:italic;font-weight:700;
+  font-size:clamp(34px,12vw,68px);color:var(--cream);line-height:1;
+  opacity:0;animation:fadeUp 1.2s ease .6s forwards;
+  text-shadow:0 4px 40px rgba(0,0,0,.5);
+}
+.entry-sub{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(13px,3.6vw,19px);color:var(--blue);
+  max-width:300px;line-height:1.6;
+  opacity:0;animation:fadeUp 1.2s ease .9s forwards;
+}
+.entry-rule{
+  width:44px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0;animation:fadeUp 1.2s ease 1.15s forwards;
+}
+.entry-text{
+  font-family:'EB Garamond',serif;font-style:italic;
+  font-size:clamp(12px,3.4vw,16px);color:rgba(250,245,236,.55);
+  line-height:2;max-width:250px;
+  opacity:0;animation:fadeUp 1.2s ease 1.4s forwards;
+}
+.entry-btn{
+  margin-top:14px;
+  font-family:'Jost',sans-serif;font-weight:300;font-size:10px;
+  letter-spacing:3.5px;text-transform:uppercase;color:var(--gold2);
+  background:transparent;border:1px solid rgba(201,169,110,.4);
+  padding:13px 32px;cursor:pointer;
+  opacity:0;animation:fadeUp 1.2s ease 1.8s forwards;
+  transition:all .4s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.entry-btn:active{background:rgba(201,169,110,.18);border-color:var(--gold);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+
+/* ═══════════════════════════════════════
+   SECTION SHELL  (mobile-first paddings)
+═══════════════════════════════════════ */
+section{position:relative;z-index:3;}
+
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s ease,transform .9s ease;}
+.reveal.in{opacity:1;transform:translateY(0);}
+
+.section-pad{padding:56px 18px;}
+.section-label{
+  text-align:center;font-family:'Jost',sans-serif;font-weight:300;
+  font-size:9px;letter-spacing:4px;text-transform:uppercase;color:var(--gold);
+  opacity:.75;margin-bottom:8px;
+}
+.section-heading{
+  text-align:center;font-family:'Libre Baskerville',serif;font-style:italic;font-weight:700;
+  font-size:clamp(23px,7vw,42px);color:var(--ink);margin-bottom:12px;
+  padding:0 8px;
+}
+.section-rule{
+  width:48px;height:1px;margin:0 auto 36px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* ═══════════════════════════════════════
+   1 ─ MOSAIC / MURAL  (mobile-first grid)
+═══════════════════════════════════════ */
+#mosaic-section{background:var(--cream2);}
+
+.mosaic-wrap{
+  max-width:1000px;margin:0 auto;
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:14px 10px;
+  padding:6px 2px 24px;
+}
+.mosaic-item{
+  position:relative;cursor:pointer;
+  background:#fff;padding:6px 6px 20px;
+  box-shadow:2px 4px 14px rgba(36,21,9,.16);
+  transition:transform .3s ease,box-shadow .3s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.mosaic-item img{width:100%;aspect-ratio:1;object-fit:cover;display:block;}
+.mosaic-item:active{transform:scale(.97);}
+.mosaic-item .m-cap{
+  position:absolute;bottom:3px;left:0;right:0;text-align:center;
+  font-family:'Pinyon Script',cursive;font-size:11px;color:#8a7058;
+}
+
+.mosaic-item.r1{transform:rotate(-2.5deg);}
+.mosaic-item.r2{transform:rotate(2deg);}
+.mosaic-item.r3{transform:rotate(-1.5deg);}
+.mosaic-item.r4{transform:rotate(2.5deg);}
+.mosaic-item.r5{transform:rotate(-2deg);}
+.mosaic-item.big{grid-column:span 2;}
+
+@media(min-width:540px){
+  .mosaic-wrap{grid-template-columns:repeat(4,1fr);gap:18px 14px;padding:10px 6px 40px;}
+  .mosaic-item{padding:7px 7px 22px;}
+  .mosaic-item .m-cap{font-size:12px;bottom:4px;}
+  .mosaic-item.big{grid-row:span 2;}
+  .mosaic-item:hover{transform:scale(1.07) rotate(0deg) !important;box-shadow:4px 10px 30px rgba(36,21,9,.3);z-index:5;}
+}
+
+/* lightbox */
+#lightbox{
+  position:fixed;inset:0;z-index:2100;background:rgba(8,5,2,.95);
+  display:none;align-items:center;justify-content:center;padding:16px;
+}
+#lightbox.show{display:flex;animation:fadeIn .3s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+#lightbox img{max-width:94vw;max-height:86dvh;object-fit:contain;box-shadow:0 20px 60px rgba(0,0,0,.6);}
+#lightbox-close{
+  position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;
+  width:38px;height:38px;border-radius:50%;
+  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);
+  color:#fff;font-size:17px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ═══════════════════════════════════════
+   2 ─ CAPÍTULO 30  (mobile-first text)
+═══════════════════════════════════════ */
+#ch30-section{background:var(--cream);}
+
+.ch-wrap{max-width:620px;margin:0 auto;}
+.ch-para{
+  font-family:'EB Garamond',serif;font-size:clamp(15px,4.2vw,19px);
+  color:var(--ink2);line-height:1.95;margin-bottom:26px;
+  opacity:0;transform:translateY(18px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.ch-para.in{opacity:1;transform:translateY(0);}
+.ch-para.em{font-style:italic;color:var(--rose);text-align:center;font-size:1.1em;}
+
+.ch-inline-photo{
+  margin:30px auto;max-width:240px;width:100%;
+  background:#fff;padding:7px 7px 22px;
+  box-shadow:3px 5px 18px rgba(36,21,9,.18);
+  transform:rotate(-2deg);
+  opacity:0;transform-origin:center;
+  transition:opacity .9s ease;
+}
+.ch-inline-photo.in{opacity:1;}
+.ch-inline-photo img{width:100%;aspect-ratio:1;object-fit:cover;}
+.ch-inline-photo .cap{
+  text-align:center;font-family:'Pinyon Script',cursive;font-size:13px;
+  color:#8a7058;margin-top:5px;
+}
+
+@media(min-width:540px){
+  .ch-para{margin-bottom:34px;}
+  .ch-inline-photo{margin:40px auto;max-width:280px;}
+}
+
+/* ═══════════════════════════════════════
+   3 ─ CAPÍTULO 31 — Gabriel POV (mobile-first)
+═══════════════════════════════════════ */
+#ch31-section{
+  background:
+    linear-gradient(var(--cream2),var(--cream2)),
+    repeating-linear-gradient(transparent, transparent 34px, rgba(36,21,9,.06) 35px);
+  position:relative;
+}
+#ch31-section::before{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.04' numOctaves='3'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23p)' opacity='0.06'/%3E%3C/svg%3E");
+  pointer-events:none;
+}
+
+.pov-divider{text-align:center;padding-top:0;}
+.pov-divider h3{
+  font-family:'Pinyon Script',cursive;font-size:clamp(28px,9vw,44px);
+  color:var(--rose);margin-bottom:12px;
+}
+.pov-divider .gold-line{width:70px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 36px;}
+
+.letter-wrap{max-width:560px;margin:0 auto;position:relative;z-index:2;}
+.letter-para{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:400;
+  font-size:clamp(16px,4.4vw,21px);color:var(--ink);line-height:1.95;
+  margin-bottom:20px;
+  opacity:0;transform:translateY(16px);
+  transition:opacity .8s ease,transform .8s ease;
+}
+.letter-para.in{opacity:1;transform:translateY(0);}
+.letter-para.highlight{color:var(--rose);font-size:1.08em;text-align:center;}
+.letter-signoff{
+  font-family:'Pinyon Script',cursive;font-size:26px;color:var(--ink2);
+  text-align:right;margin-top:22px;
+  opacity:0;transition:opacity 1.2s ease;
+}
+.letter-signoff.in{opacity:.85;}
+
+@media(min-width:540px){
+  .pov-divider .gold-line{width:90px;margin-bottom:50px;}
+  .letter-para{margin-bottom:26px;}
+  .letter-signoff{font-size:30px;margin-top:30px;}
+}
+
+/* ═══════════════════════════════════════
+   4 ─ GALLERY "Nosso primeiro ano"  (mobile-first)
+═══════════════════════════════════════ */
+#gallery-section{background:var(--cream2);}
+.gallery-grid{
+  max-width:1000px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:5px;padding:0 2px;
+}
+.gallery-grid img{
+  width:100%;aspect-ratio:1;object-fit:cover;cursor:pointer;
+  filter:saturate(.92);transition:transform .25s ease,filter .25s ease;
+  -webkit-tap-highlight-color:transparent;
+}
+.gallery-grid img:active{transform:scale(.96);}
+
+@media(min-width:540px){
+  .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px;padding:0 4px;}
+  .gallery-grid img:hover{transform:scale(1.05);filter:saturate(1.1);z-index:2;position:relative;}
+}
+
+/* ═══════════════════════════════════════
+   5 ─ COUNTER  (mobile-first 2-col grid)
+═══════════════════════════════════════ */
+#counter-section{
+  background:linear-gradient(165deg,var(--dark) 0%,var(--dark2) 60%,var(--dark) 100%);
+  color:var(--cream);
+}
+#counter-section .section-label{color:var(--gold2);}
+#counter-section .section-heading{color:var(--cream);}
+#counter-section .section-rule{background:linear-gradient(90deg,transparent,var(--gold2),transparent);}
+
+.counter-grid{
+  max-width:680px;margin:0 auto;
+  display:grid;grid-template-columns:repeat(2,1fr);gap:18px 12px;
+}
+@media(min-width:480px){.counter-grid{grid-template-columns:repeat(4,1fr);gap:22px 16px;}}
+
+.counter-card{text-align:center;padding:14px 6px;}
+.counter-num{
+  font-family:'Libre Baskerville',serif;font-weight:700;
+  font-size:clamp(24px,8vw,42px);color:var(--gold2);
+  font-variant-numeric:tabular-nums;
+}
+.counter-unit{
+  font-family:'Jost',sans-serif;font-weight:300;font-size:9px;
+  letter-spacing:2px;text-transform:uppercase;color:rgba(250,245,236,.5);
+  margin-top:5px;
+}
+.counter-foot{
+  text-align:center;margin-top:36px;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:clamp(14px,4vw,19px);color:rgba(250,245,236,.65);
+  padding:0 8px;
+}
+.counter-foot strong{color:var(--blue2);font-style:normal;}
+
+@media(min-width:540px){.counter-foot{margin-top:50px;}}
+
+/* ═══════════════════════════════════════
+   6 ─ FULL QUOTE  (mobile-first)
+═══════════════════════════════════════ */
+#quote-section{
+  background:linear-gradient(165deg,#15100a 0%,#241509 100%);
+  min-height:70dvh;display:flex;align-items:center;justify-content:center;
+  padding:60px 22px;text-align:center;
+}
+.big-quote{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(18px,6vw,36px);color:var(--cream);line-height:1.65;
+  max-width:680px;
+}
+.big-quote .accent{color:var(--gold2);}
+
+/* ═══════════════════════════════════════
+   7 ─ STARS / THANK GOD  (mobile-first)
+═══════════════════════════════════════ */
+#stars-section{
+  position:relative;min-height:100dvh;
+  background:radial-gradient(ellipse at 50% 30%,#1c120a 0%,#0a0603 75%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  overflow:hidden;padding:50px 20px;text-align:center;
+}
+.star{
+  position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+  opacity:0;animation:twinkle 3.5s ease-in-out infinite;
+}
+@keyframes twinkle{0%,100%{opacity:0;}50%{opacity:.85;}}
+
+.stars-fading-photos{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  gap:10px;opacity:.18;filter:blur(1px) grayscale(.4);pointer-events:none;
+}
+.stars-fading-photos img{width:64px;height:64px;object-fit:cover;border-radius:4px;}
+
+.thank-god{position:relative;z-index:3;}
+.thank-god h2{
+  font-family:'Pinyon Script',cursive;font-size:clamp(30px,10vw,56px);
+  color:var(--gold2);margin-bottom:12px;
+}
+.thank-god p{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(14px,4vw,19px);
+  color:rgba(250,245,236,.6);line-height:1.8;max-width:300px;margin:0 auto;
+}
+
+@media(min-width:540px){
+  .stars-fading-photos img{width:90px;height:90px;}
+  .stars-fading-photos{gap:14px;}
+  .thank-god h2{margin-bottom:16px;}
+  .thank-god p{max-width:340px;}
+}
+
+/* ═══════════════════════════════════════
+   ENDING  (mobile-first)
+═══════════════════════════════════════ */
+#ending{
+  min-height:100dvh;background:#000;
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  padding:32px;
+}
+.ending-text{
+  font-family:'Libre Baskerville',serif;font-style:italic;
+  font-size:clamp(16px,5.5vw,28px);color:rgba(250,245,236,.85);
+  opacity:0;transition:opacity 1.5s ease;
+  position:absolute;padding:0 20px;
+}
+.ending-text.show{opacity:1;}
+.ending-text.continua{
+  font-family:'Pinyon Script',cursive;font-size:clamp(30px,10vw,56px);color:var(--gold2);
+}
+
+#back-link{
+  position:fixed;bottom:max(14px,env(safe-area-inset-bottom));left:50%;transform:translateX(-50%);
+  font-family:'Jost',sans-serif;font-weight:300;font-size:9px;letter-spacing:1.8px;
+  text-transform:uppercase;color:rgba(250,245,236,.4);text-decoration:none;
+  z-index:50;padding:7px 14px;border:1px solid rgba(250,245,236,.15);border-radius:30px;
+  background:rgba(0,0,0,.3);backdrop-filter:blur(6px);
+  transition:color .3s,border-color .3s;
+  -webkit-tap-highlight-color:transparent;
+}
+#back-link:active{color:var(--gold2);border-color:var(--gold2);}
+
+@media(min-width:540px){
+  #back-link{bottom:18px;font-size:10px;letter-spacing:2px;padding:8px 16px;}
+}
+
+</style>
+</head>
+<body>
+
+<div id="particles"></div>
+
+<!-- ═══════════════ ENTRY ═══════════════ -->
+<div id="entry">
+  <div id="entry-bg" style="background-image:url('fotos/foto3.JPG')"></div>
+  <div class="entry-content">
+    <p class="entry-eyebrow">edição especial</p>
+    <h1 class="entry-date">21 de Junho</h1>
+    <p class="entry-sub">Um ano desde que Deus escreveu um novo começo.</p>
+    <div class="entry-rule"></div>
+    <p class="entry-text">365 dias.<br>Incontáveis lembranças.<br>Um sonho sendo vivido.</p>
+    <button class="entry-btn" onclick="enterPage()">continuar</button>
+  </div>
+</div>
+
+<a href="index.html" id="back-link">← voltar ao livro</a>
+
+
+<!-- ═══════════════ 1. MOSAIC ═══════════════ -->
+<section id="mosaic-section" class="section-pad">
+  <p class="section-label reveal">o mural</p>
+  <h2 class="section-heading reveal">Memórias espalhadas</h2>
+  <div class="section-rule reveal"></div>
+
+  <div class="mosaic-wrap">
+    <div class="mosaic-item r1 big" onclick="openLightbox('fotos/foto5.JPG')"><img src="fotos/foto5.JPG" alt=""><span class="m-cap">nós ♡</span></div>
+    <div class="mosaic-item r2" onclick="openLightbox('fotos/foto2.JPG')"><img src="fotos/foto2.JPG" alt=""></div>
+    <div class="mosaic-item r3" onclick="openLightbox('fotos/foto4.PNG')"><img src="fotos/foto4.PNG" alt=""></div>
+    <div class="mosaic-item r4" onclick="openLightbox('fotos/foto19.PNG')"><img src="fotos/foto19.PNG" alt=""></div>
+    <div class="mosaic-item r5" onclick="openLightbox('fotos/foto30.JPG')"><img src="fotos/foto30.JPG" alt=""></div>
+    <div class="mosaic-item r2" onclick="openLightbox('fotos/foto26.JPG')"><img src="fotos/foto26.JPG" alt=""></div>
+    <div class="mosaic-item r1" onclick="openLightbox('fotos/foto29.JPG')"><img src="fotos/foto29.JPG" alt=""></div>
+    <div class="mosaic-item r3" onclick="openLightbox('fotos/foto13.JPG')"><img src="fotos/foto13.JPG" alt=""></div>
+    <div class="mosaic-item r4 big" onclick="openLightbox('fotos/foto20.jpg')"><img src="fotos/foto20.jpg" alt=""><span class="m-cap">para sempre ♡</span></div>
+    <div class="mosaic-item r5" onclick="openLightbox('fotos/foto16.jpeg')"><img src="fotos/foto16.jpeg" alt=""></div>
+    <div class="mosaic-item r1" onclick="openLightbox('fotos/foto18.jpeg')"><img src="fotos/foto18.jpeg" alt=""></div>
+    <div class="mosaic-item r2" onclick="openLightbox('fotos/foto21.jpg')"><img src="fotos/foto21.jpg" alt=""></div>
+  </div>
+</section>
+
+<div id="lightbox" onclick="closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox(event)">✕</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+
+<!-- ═══════════════ 2. CAPÍTULO 30 ═══════════════ -->
+<section id="ch30-section" class="section-pad">
+  <p class="section-label reveal">capítulo 30</p>
+  <h2 class="section-heading reveal">Um ano depois</h2>
+  <div class="section-rule reveal"></div>
+
+  <div class="ch-wrap">
+    <p class="ch-para">No dia 21 de junho, uma data passou quase despercebida para quem olhava de fora.</p>
+    <p class="ch-para">Não havia festa. Não havia presentes. Não havia uma grande comemoração.</p>
+    <p class="ch-para em">Mas, para Gabriel e Ana, aquele dia carregava um significado enorme.</p>
+
+    <div class="ch-inline-photo">
+      <img src="fotos/foto19.PNG" alt="">
+      <p class="cap">um ano de história ♡</p>
+    </div>
+
+    <p class="ch-para">Fazia exatamente um ano que eles tinham voltado a conversar. Um ano desde que Deus cruzou novamente os caminhos de duas pessoas que, um dia, pareciam ter ficado apenas nas lembranças.</p>
+    <p class="ch-para">E, quando Gabriel olhava para tudo que tinha acontecido desde então, era difícil acreditar. Em um único ano, eles tinham vivido mais do que ele imaginou viver em muito mais tempo.</p>
+    <p class="ch-para">Cantaram juntos. Descobriram que suas vozes combinavam tanto quanto seus corações. Transformaram uma história em um livro. E depois transformaram um livro em um lugar onde suas lembranças poderiam viver para sempre.</p>
+    <p class="ch-para">Choraram juntos. Disseram "eu te amo" pela primeira vez. Conversaram sobre o futuro. Fizeram planos. Esperaram. Aprenderam que o amor também sabe esperar.</p>
+
+    <div class="ch-inline-photo">
+      <img src="fotos/foto15.jpg" alt="">
+      <p class="cap">cada detalhe valeu a pena ♡</p>
+    </div>
+
+    <p class="ch-para">Vieram os abraços. Os presentes feitos com carinho. As conversas que duravam horas. Os jogos de futebol. As partidas de Block Blast e Termo. As músicas cantadas lado a lado. Os momentos de silêncio que diziam mais do que muitas palavras.</p>
+    <p class="ch-para">Vieram também as confirmações. Dos pais. Da família. Dos amigos. E, acima de tudo, de Deus.</p>
+    <p class="ch-para em">Nada daquilo parecia fruto do acaso.</p>
+    <p class="ch-para">Cada detalhe parecia ter sido cuidadosamente preparado. Como se Deus tivesse escrito cada capítulo antes mesmo que eles soubessem que a história existia.</p>
+    <p class="ch-para">Quando Gabriel lembrava do menino de 2019, que apenas sonhava em um dia viver algo assim, quase não conseguia acreditar. Porque aquele sonho, aos poucos, tinha deixado de ser sonho. Estava se tornando realidade.</p>
+    <p class="ch-para em">E talvez o mais bonito de tudo fosse saber que aquela história ainda estava longe do fim. Ela ainda estava sendo escrita.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════ 3. CAPÍTULO 31 — POV (carta) ═══════════════ -->
+<section id="ch31-section" class="section-pad">
+  <div class="pov-divider reveal">
+    <h3>Do ponto de vista do Gabriel</h3>
+    <div class="gold-line"></div>
+  </div>
+
+  <div class="letter-wrap">
+    <p class="letter-para">Às vezes eu paro por alguns minutos e tento entender tudo o que aconteceu nesse último ano.</p>
+    <p class="letter-para">E, sinceramente, eu não consigo. Porque parece bom demais para ser verdade.</p>
+    <p class="letter-para">Há um ano, Deus nos deu uma nova oportunidade de conversar. Naquele momento eu não fazia ideia do que estava por vir.</p>
+    <p class="letter-para">Eu não imaginava que cantaria ao lado dela. Que escreveria um livro sobre a nossa história. Que transformaria esse livro em um site. Que ouviria um "eu te amo". Que daria o primeiro abraço.</p>
+    <p class="letter-para">Que ela dormiria no meu ombro. Que eu conheceria um lado dela que poucas pessoas conhecem. Que ela conheceria o meu.</p>
+    <p class="letter-para">Eu não imaginava que ela faria uma carta que me faria chorar. Que ela conversaria com a minha avó como se já fizesse parte da família. Que meus pais, meus avós e toda a minha família passariam a amar ela também.</p>
+    <p class="letter-para highlight">Eu não imaginava que Deus responderia tantas orações de um jeito tão perfeito.</p>
+    <p class="letter-para">Hoje eu olho para trás e vejo uma coisa que, durante muito tempo, eu não conseguia enxergar.</p>
+    <p class="letter-para highlight">Deus nunca perdeu o controle da nossa história.</p>
+    <p class="letter-para">Nem quando eu não entendia. Nem quando eu precisava esperar. Nem quando parecia que nada estava acontecendo.</p>
+    <p class="letter-para">Enquanto eu achava que Deus estava em silêncio, Ele estava preparando detalhes que eu jamais conseguiria imaginar.</p>
+    <p class="letter-para">Hoje eu entendo que esperar nunca foi perder tempo. Foi aprender a confiar. Foi permitir que Deus escrevesse uma história muito melhor do que qualquer uma que eu tentaria escrever sozinho.</p>
+    <p class="letter-para">Eu estou vivendo um sonho. Mas não um sonho qualquer. Estou vivendo um sonho que nasceu no coração de Deus antes de nascer no meu.</p>
+    <p class="letter-para">E talvez seja justamente por isso que tudo parece tão perfeito. Não porque nunca tivemos dificuldades. Não porque tudo saiu exatamente como planejamos.</p>
+    <p class="letter-para">Mas porque, em cada capítulo, eu consigo enxergar o cuidado de Deus. Em cada conversa. Em cada música. Em cada abraço. Em cada risada. Em cada espera.</p>
+    <p class="letter-para highlight">Eu consigo ver que Ele esteve ali.</p>
+    <p class="letter-para">E, se eu pudesse voltar um ano no tempo e conversar com aquele Gabriel que só queria uma chance de recomeçar, eu diria apenas uma coisa:</p>
+    <p class="letter-para highlight">"Confia. Você ainda não faz ideia do que Deus está preparando. Mas um dia você vai olhar para trás e perceber que cada detalhe valeu a pena."</p>
+
+    <p class="letter-signoff">— Gabriel</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════ 4. GALLERY ═══════════════ -->
+<section id="gallery-section" class="section-pad">
+  <p class="section-label reveal">a retrospectiva</p>
+  <h2 class="section-heading reveal">Nosso primeiro ano</h2>
+  <div class="section-rule reveal"></div>
+
+  <div class="gallery-grid">
+    <img src="fotos/foto1.jpg"  onclick="openLightbox('fotos/foto1.jpg')"  alt="">
+    <img src="fotos/foto2.JPG"  onclick="openLightbox('fotos/foto2.JPG')"  alt="">
+    <img src="fotos/foto3.JPG"  onclick="openLightbox('fotos/foto3.JPG')"  alt="">
+    <img src="fotos/foto4.PNG"  onclick="openLightbox('fotos/foto4.PNG')"  alt="">
+    <img src="fotos/foto5.JPG"  onclick="openLightbox('fotos/foto5.JPG')"  alt="">
+    <img src="fotos/foto6.JPG"  onclick="openLightbox('fotos/foto6.JPG')"  alt="">
+    <img src="fotos/foto7.JPG"  onclick="openLightbox('fotos/foto7.JPG')"  alt="">
+    <img src="fotos/foto8.jpeg" onclick="openLightbox('fotos/foto8.jpeg')" alt="">
+    <img src="fotos/foto9.JPG"  onclick="openLightbox('fotos/foto9.JPG')"  alt="">
+    <img src="fotos/foto10.JPG" onclick="openLightbox('fotos/foto10.JPG')" alt="">
+    <img src="fotos/foto11.JPG" onclick="openLightbox('fotos/foto11.JPG')" alt="">
+    <img src="fotos/foto12.JPG" onclick="openLightbox('fotos/foto12.JPG')" alt="">
+    <img src="fotos/foto13.JPG" onclick="openLightbox('fotos/foto13.JPG')" alt="">
+    <img src="fotos/foto14.JPG" onclick="openLightbox('fotos/foto14.JPG')" alt="">
+    <img src="fotos/foto17.jpeg" onclick="openLightbox('fotos/foto17.jpeg')" alt="">
+    <img src="fotos/foto18.jpeg" onclick="openLightbox('fotos/foto18.jpeg')" alt="">
+    <img src="fotos/foto20.jpg" onclick="openLightbox('fotos/foto20.jpg')" alt="">
+    <img src="fotos/foto21.jpg" onclick="openLightbox('fotos/foto21.jpg')" alt="">
+    <img src="fotos/foto22.jpg" onclick="openLightbox('fotos/foto22.jpg')" alt="">
+    <img src="fotos/foto23.jpg" onclick="openLightbox('fotos/foto23.jpg')" alt="">
+    <img src="fotos/foto24.jpg" onclick="openLightbox('fotos/foto24.jpg')" alt="">
+    <img src="fotos/foto25.jpg" onclick="openLightbox('fotos/foto25.jpg')" alt="">
+    <img src="fotos/foto26.jpg" onclick="openLightbox('fotos/foto26.jpg')" alt="">
+    <img src="fotos/foto27.jpg" onclick="openLightbox('fotos/foto27.jpg')" alt="">
+    <img src="fotos/foto28.jpg" onclick="openLightbox('fotos/foto28.jpg')" alt="">
+  </div>
+</section>
+
+
+<!-- ═══════════════ 5. COUNTER ═══════════════ -->
+<section id="counter-section" class="section-pad">
+  <p class="section-label reveal">o número de dias</p>
+  <h2 class="section-heading reveal">Já vivemos</h2>
+  <div class="section-rule reveal"></div>
+
+  <div class="counter-grid">
+    <div class="counter-card reveal">
+      <div class="counter-num" data-target="365">0</div>
+      <div class="counter-unit">dias</div>
+    </div>
+    <div class="counter-card reveal">
+      <div class="counter-num" data-target="52">0</div>
+      <div class="counter-unit">semanas</div>
+    </div>
+    <div class="counter-card reveal">
+      <div class="counter-num" data-target="8760">0</div>
+      <div class="counter-unit">horas</div>
+    </div>
+    <div class="counter-card reveal">
+      <div class="counter-num" data-target="525600">0</div>
+      <div class="counter-unit">minutos</div>
+    </div>
+  </div>
+
+  <p class="counter-foot reveal">Juntos nessa nova história.<br><strong>E ainda estamos só no começo.</strong></p>
+</section>
+
+
+<!-- ═══════════════ 6. BIG QUOTE ═══════════════ -->
+<section id="quote-section">
+  <p class="big-quote reveal">
+    "Se há um ano alguém me dissesse que viveríamos tudo isso…<br><br>
+    eu provavelmente não acreditaria.<br><br>
+    <span class="accent">Mas Deus já sabia.</span>"
+  </p>
+</section>
+
+
+<!-- ═══════════════ 7. STARS / THANK GOD ═══════════════ -->
+<section id="stars-section">
+  <div class="stars-fading-photos">
+    <img src="fotos/foto5.JPG" alt="">
+    <img src="fotos/foto4.PNG" alt="">
+    <img src="fotos/foto19.PNG" alt="">
+  </div>
+  <div class="thank-god reveal">
+    <h2>Obrigado, Deus.</h2>
+    <p>Por cuidar de cada detalhe.</p>
+  </div>
+</section>
+
+
+<!-- ═══════════════ ENDING ═══════════════ -->
+<section id="ending">
+  <p class="ending-text" id="end-1">Capítulo 31 concluído.</p>
+  <p class="ending-text" id="end-2">Mas nossa história ainda está sendo escrita…</p>
+  <p class="ending-text continua" id="end-3">Continua…</p>
+</section>
+
+
+<script>
+/* ════════════════════════════════
+   ENTRY SCREEN
+════════════════════════════════ */
+function enterPage(){
+  document.getElementById('entry').classList.add('hidden');
+  document.body.style.overflow='auto';
+  setTimeout(initParticles, 200);
+}
+document.body.style.overflow='hidden';
+
+/* ════════════════════════════════
+   PARTICLES
+════════════════════════════════ */
+function initParticles(){
+  const container=document.getElementById('particles');
+  const count = window.innerWidth < 540 ? 14 : 22;
+  for(let i=0;i<count;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=2+Math.random()*3;
+    p.style.width=size+'px';
+    p.style.height=size+'px';
+    p.style.left=Math.random()*100+'vw';
+    p.style.bottom='-10px';
+    p.style.animationDuration=(14+Math.random()*16)+'s';
+    p.style.animationDelay=(Math.random()*14)+'s';
+    container.appendChild(p);
+  }
+}
+
+/* ════════════════════════════════
+   SCROLL REVEAL
+════════════════════════════════ */
+const revealObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>revealObserver.observe(el));
+
+const paraObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:.25});
+document.querySelectorAll('.ch-para,.ch-inline-photo,.letter-para,.letter-signoff')
+  .forEach(el=>paraObserver.observe(el));
+
+
+/* ════════════════════════════════
+   LIGHTBOX
+════════════════════════════════ */
+function openLightbox(src){
+  document.getElementById('lightbox-img').src=src;
+  document.getElementById('lightbox').classList.add('show');
+}
+function closeLightbox(e){
+  if(e) e.stopPropagation();
+  document.getElementById('lightbox').classList.remove('show');
+}
+
+/* ════════════════════════════════
+   COUNTER ANIMATION
+════════════════════════════════ */
+const counterObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const el=entry.target;
+      const target=parseInt(el.dataset.target);
+      const duration=2000;
+      const start=performance.now();
+      function tick(now){
+        const progress=Math.min((now-start)/duration,1);
+        const eased=1-Math.pow(1-progress,3);
+        el.textContent=Math.floor(eased*target).toLocaleString('pt-BR');
+        if(progress<1) requestAnimationFrame(tick);
+        else el.textContent=target.toLocaleString('pt-BR');
+      }
+      requestAnimationFrame(tick);
+      counterObserver.unobserve(el);
+    }
+  });
+},{threshold:.5});
+document.querySelectorAll('.counter-num').forEach(el=>counterObserver.observe(el));
+
+/* ════════════════════════════════
+   STARS GENERATION
+════════════════════════════════ */
+const starsSection=document.getElementById('stars-section');
+const starCount = window.innerWidth < 540 ? 40 : 60;
+for(let i=0;i<starCount;i++){
+  const s=document.createElement('div');
+  s.className='star';
+  s.style.left=Math.random()*100+'%';
+  s.style.top=Math.random()*100+'%';
+  s.style.animationDelay=(Math.random()*3.5)+'s';
+  s.style.animationDuration=(2.5+Math.random()*3)+'s';
+  starsSection.appendChild(s);
+}
+
+/* ════════════════════════════════
+   ENDING SEQUENCE
+════════════════════════════════ */
+const endingObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(entry=>{
+    if(entry.isIntersecting){
+      const e1=document.getElementById('end-1');
+      const e2=document.getElementById('end-2');
+      const e3=document.getElementById('end-3');
+      setTimeout(()=>e1.classList.add('show'),300);
+      setTimeout(()=>e1.classList.remove('show'),3200);
+      setTimeout(()=>e2.classList.add('show'),3700);
+      setTimeout(()=>e2.classList.remove('show'),6800);
+      setTimeout(()=>e3.classList.add('show'),7300);
+      endingObserver.unobserve(entry.target);
+    }
+  });
+},{threshold:.6});
+endingObserver.observe(document.getElementById('ending'));
+
+/* ESC closes overlays */
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){ closeLightbox(); }
+});
+</script>
+
+</body>
+</html>
