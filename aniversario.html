@@ -400,6 +400,52 @@ section{position:relative;z-index:3;}
 }
 
 /* ═══════════════════════════════════════
+   PAUSA — Uma promessa ao futuro
+═══════════════════════════════════════ */
+#promise-section{
+  background:linear-gradient(180deg,var(--cream) 0%,#f7f2e6 50%,var(--cream) 100%);
+  padding:90px 24px 100px;
+  position:relative;
+}
+#promise-section::before{
+  content:'';display:block;
+  width:1px;height:70px;
+  margin:0 auto 60px;
+  background:linear-gradient(180deg,transparent,rgba(36,21,9,.18));
+}
+.promise-wrap{max-width:480px;margin:0 auto;text-align:center;}
+.promise-title{
+  font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:300;
+  font-size:clamp(17px,4.6vw,22px);letter-spacing:.5px;
+  color:var(--ink2);
+  margin-bottom:52px;
+  opacity:0;transform:translateY(10px);
+  transition:opacity 1.4s ease,transform 1.4s ease;
+}
+.promise-title.in{opacity:.75;transform:translateY(0);}
+.promise-para{
+  font-family:'EB Garamond',serif;font-style:italic;font-weight:400;
+  font-size:clamp(14px,3.8vw,17px);line-height:2.3;
+  color:var(--ink2);
+  margin-bottom:20px;
+  opacity:0;transform:translateY(14px);
+  transition:opacity 1.6s ease,transform 1.6s ease;
+}
+.promise-para.in{opacity:.88;transform:translateY(0);}
+.promise-signoff{
+  margin-top:56px;
+  font-family:'Jost',sans-serif;font-weight:300;font-size:11px;
+  letter-spacing:2px;color:var(--ink2);
+  opacity:0;transition:opacity 1.8s ease;
+}
+.promise-signoff.in{opacity:.45;}
+
+@media(min-width:540px){
+  #promise-section{padding:120px 24px 130px;}
+  .promise-para{margin-bottom:26px;}
+}
+
+/* ═══════════════════════════════════════
    ENDING  (mobile-first)
 ═══════════════════════════════════════ */
 #ending{
@@ -640,6 +686,31 @@ section{position:relative;z-index:3;}
 </section>
 
 
+<!-- ═══════════════ PAUSA ═══════════════ -->
+<section id="promise-section">
+  <div class="promise-wrap">
+    <p class="promise-title">Uma promessa ao futuro</p>
+
+    <p class="promise-para">Há um dia escondido em algum lugar do futuro.</p>
+    <p class="promise-para">Eu ainda não posso escrever sobre ele.</p>
+    <p class="promise-para">Porque ele ainda não aconteceu.</p>
+    <p class="promise-para">Só sei que existirão dois lugares.</p>
+    <p class="promise-para">O primeiro será cercado por árvores.</p>
+    <p class="promise-para">O segundo terá uma mesa preparada para dois.</p>
+    <p class="promise-para">No primeiro haverá uma pergunta.</p>
+    <p class="promise-para">No segundo, uma comemoração.</p>
+    <p class="promise-para">Entre os dois existirá apenas uma resposta.</p>
+    <p class="promise-para">Ela terá três letras.</p>
+    <p class="promise-para">E mudará todos os capítulos que vierem depois.</p>
+    <p class="promise-para">Se um dia estas palavras fizerem sentido…</p>
+    <p class="promise-para">lembre-se deste momento.</p>
+    <p class="promise-para">Porque significará que Deus escreveu mais um capítulo da nossa história.</p>
+
+    <p class="promise-signoff">G.</p>
+  </div>
+</section>
+
+
 <!-- ═══════════════ ENDING ═══════════════ -->
 <section id="ending">
   <p class="ending-text" id="end-1">Capítulo 31 concluído.</p>
@@ -692,6 +763,12 @@ const paraObserver=new IntersectionObserver((entries)=>{
 },{threshold:.25});
 document.querySelectorAll('.ch-para,.ch-inline-photo,.letter-para,.letter-signoff')
   .forEach(el=>paraObserver.observe(el));
+
+const promiseObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('in'); });
+},{threshold:.3});
+document.querySelectorAll('.promise-title,.promise-para,.promise-signoff')
+  .forEach(el=>promiseObserver.observe(el));
 
 
 /* ════════════════════════════════
