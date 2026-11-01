@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nossa Linha do Tempo — Gabriel & Ana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Pinyon+Script&family=Marcellus&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #fdf4e7;
+  --surface: #fffaf2;
+  --ink: #1a0f08;
+  --ink-2: #3d2416;
+  --ink-3: #7a5a42;
+  --rose: #a0403a;
+  --rose-2: #f0d5d2;
+  --rose-3: #c06860;
+  --gold: #a07830;
+  --gold-light: #c9a660;
+  --serif: 'Cormorant Garamond', Georgia, serif;
+  --script: 'Pinyon Script', cursive;
+  --title: 'Marcellus', serif;
+  --sans: 'Jost', system-ui, sans-serif;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+.back-link { display: block; text-align: center; padding: 1.4rem 1rem 0; }
+.back-link a { font-family: var(--sans); font-size: 0.62rem; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; opacity: 0.7; transition: opacity 0.2s; }
+.back-link a:hover { opacity: 1; }
+
+.hero { padding: 2.5rem 1.5rem 2.5rem; text-align: center; }
+.hero-label { font-family: var(--sans); font-size: 0.65rem; font-weight: 400; letter-spacing: 0.28em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.1rem; }
+.hero-title { font-family: var(--serif); font-size: 3.2rem; font-weight: 300; font-style: italic; color: var(--ink); line-height: 1.05; }
+.hero-title strong { font-family: var(--title); font-weight: 400; font-style: normal; color: var(--rose); display: block; font-size: 1.15rem; margin-top: 0.5rem; letter-spacing: 0.03em; }
+.hero-line { width: 32px; height: 1px; background: var(--gold); opacity: 0.5; margin: 1.6rem auto; }
+.hero-sub { font-family: var(--serif); font-size: 1.05rem; font-style: italic; font-weight: 300; color: var(--ink-3); line-height: 1.75; max-width: 300px; margin: 0 auto; }
+
+.tl { padding: 0.5rem 1.25rem 4rem 3rem; position: relative; max-width: 500px; margin: 0 auto; }
+.tl-spine { position: absolute; left: 1.25rem; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, transparent, var(--gold) 6%, var(--gold) 94%, transparent); opacity: 0.3; }
+
+.tl-item { position: relative; padding-left: 1.6rem; margin-bottom: 1.5rem; opacity: 0; transform: translateX(-12px); transition: opacity 0.45s ease, transform 0.45s ease; }
+.tl-item.in { opacity: 1; transform: translateX(0); }
+
+.tl-dot { position: absolute; left: -0.45rem; top: 1.5rem; width: 9px; height: 9px; border-radius: 50%; background: var(--rose); border: 2px solid var(--bg); box-shadow: 0 0 0 1.5px var(--rose-3); z-index: 1; }
+
+.tl-card { border-radius: 4px; overflow: hidden; cursor: pointer; -webkit-tap-highlight-color: transparent; position: relative; aspect-ratio: 1 / 1; width: 72%; max-width: 240px; display: flex; flex-direction: column; justify-content: flex-end; transition: transform 0.18s; border: 1px solid rgba(160,120,48,0.2); background: var(--surface); box-shadow: 0 6px 20px rgba(26,15,8,0.12); }
+.tl-card:active { transform: scale(0.975); }
+
+.tl-card-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+
+.tl-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(26,15,8,0.78) 0%, rgba(26,15,8,0.22) 55%, transparent 100%); opacity: 0; transition: opacity 0.3s; }
+.tl-card.has-photo .tl-card-overlay { opacity: 1; }
+
+.tl-card-placeholder { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.5rem; background: var(--rose-2); }
+.tl-card.has-photo .tl-card-placeholder { display: none; }
+.placeholder-icon { width: 36px; height: 36px; border-radius: 50%; border: 1.5px dashed rgba(160,64,58,0.5); display: flex; align-items: center; justify-content: center; }
+.placeholder-icon svg { width: 16px; height: 16px; stroke: var(--rose); fill: none; stroke-width: 1.5; stroke-linecap: round; }
+.placeholder-label { font-size: 0.68rem; color: var(--rose); font-family: var(--sans); letter-spacing: 0.05em; }
+
+.tl-card-content { position: relative; z-index: 2; padding: 1rem 1.1rem 1rem; }
+.tl-card.has-photo .tl-date { color: rgba(255,250,242,0.75); }
+.tl-card.has-photo .tl-name { color: #fffaf2; }
+.tl-card.has-photo .tl-open { color: rgba(255,250,242,0.55); }
+
+.tl-date { font-family: var(--sans); font-size: 0.6rem; font-weight: 400; letter-spacing: 0.16em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.22rem; }
+.tl-name { font-family: var(--serif); font-size: 1.25rem; font-weight: 400; font-style: italic; color: var(--ink); line-height: 1.25; }
+.tl-open { font-family: var(--sans); font-size: 0.62rem; color: var(--ink-3); margin-top: 0.4rem; letter-spacing: 0.04em; opacity: 0.7; }
+
+.overlay { position: fixed; inset: 0; background: rgba(26,15,8,0.5); z-index: 300; opacity: 0; pointer-events: none; transition: opacity 0.28s ease; }
+.overlay.open { opacity: 1; pointer-events: all; }
+
+.sheet { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-radius: 16px 16px 0 0; max-height: 88vh; overflow-y: auto; z-index: 301; transform: translateY(100%); transition: transform 0.38s cubic-bezier(0.32, 0.72, 0, 1); -webkit-overflow-scrolling: touch; box-shadow: 0 -10px 40px rgba(26,15,8,0.25); }
+.sheet.open { transform: translateY(0); }
+.sheet-handle { width: 36px; height: 4px; background: var(--rose-2); border-radius: 2px; margin: 0.9rem auto 0; }
+.sheet-inner { padding: 1.2rem 1.5rem 3rem; }
+.sheet-date { font-family: var(--sans); font-size: 0.62rem; font-weight: 400; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.4rem; }
+.sheet-title { font-family: var(--serif); font-size: 2rem; font-weight: 300; font-style: italic; color: var(--ink); line-height: 1.15; margin-bottom: 1.2rem; }
+.sheet-rule { height: 1px; background: linear-gradient(90deg, var(--gold-light), transparent); margin-bottom: 1.3rem; opacity: 0.6; }
+.sheet-body { font-family: var(--serif); font-size: 1.07rem; font-style: italic; font-weight: 300; color: var(--ink-2); line-height: 1.95; white-space: pre-line; }
+
+.footer { text-align: center; padding: 0 1rem 4rem; }
+.footer-stem { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--gold), transparent); margin: 0 auto 1.2rem; opacity: 0.4; }
+.footer-txt { font-family: var(--script); font-size: 1.3rem; color: var(--rose); }
+.footer-names { font-family: var(--sans); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); margin-top: 0.5rem; opacity: 0.75; }
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-thumb { background: var(--rose-2); border-radius: 4px; }
+</style>
+</head>
+<body>
+
+<p class="back-link"><a href="index.html">✦ voltar ao livro</a></p>
+
+<header class="hero">
+  <p class="hero-label">Gabriel &amp; Ana</p>
+  <h1 class="hero-title">
+    Nossa História
+    <strong>escrita por Deus</strong>
+  </h1>
+  <div class="hero-line"></div>
+  <p class="hero-sub">Algumas histórias são escritas em livros. A nossa está sendo escrita por Deus.</p>
+</header>
+
+<main class="tl">
+  <div class="tl-spine"></div>
+</main>
+
+<footer class="footer">
+  <div class="footer-stem"></div>
+  <p class="footer-txt">a história continua…</p>
+  <p class="footer-names">Gabriel &amp; Ana</p>
+</footer>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-inner">
+    <p class="sheet-date" id="sDate"></p>
+    <h2 class="sheet-title" id="sTitle"></h2>
+    <div class="sheet-rule"></div>
+    <p class="sheet-body" id="sBody"></p>
+  </div>
+</div>
+
+<script>
+
+
+const EVENTS = [
+  {
+    date:  "2019",
+    title: "O Primeiro Registro",
+    body:  "Foi aqui que tudo começou.\n\nNão sabemos exatamente quando começou, mas esse é o primeiro registro.",
+    photo: "fotos/foto33.jpg"
+  },
+  {
+    date:  "Reencontro",
+    title: "O Recomeço",
+    body:  "Depois de anos, Deus cruzou nossos caminhos novamente.\n\nE aquilo que parecia apenas uma lembrança voltou a fazer parte da nossa vida.",
+    photo: "fotos/foto34.JPG"
+  },
+  {
+    date:  "14 de Dezembro de 2025",
+    title: "A Primeira Mão Dada",
+    body:  "Foi nesse retiro que demos as mãos pela primeira vez\n\nFoi numa brincadeira\n\nFogo no asilo\n\nFoi um momento simples, mas que marcou o início de algo muito especial.",
+    photo: "fotos/foto45.jpg"
+  },
+  {
+    date:  "19 de Abril de 2026",
+    title: "Nossas Vozes",
+    body:  "Cantamos juntos pela primeira vez.\n\nA música foi Dono da Minha Afeição.\n\nNa ponte da música, nossas vozes se encontraram.\n\nFoi um dos momentos mais especiais da nossa história.",
+    photo: "fotos/foto35.jpg"
+  },
+  {
+    date:  "24 de Maio de 2026",
+    title: "O Livro",
+    body:  "Transformei nossa história em um livro.\n\nDepois transformei o livro em um site.\n\nQuando ela recebeu, chorou.\n\nE naquela noite dissemos \"eu te amo\" pela primeira vez.",
+    photo: "fotos/foto36.PNG"
+  },
+  {
+    date:  "25 de Maio de 2026",
+    title: "Nosso Futuro",
+    body:  "Conversamos sobre o futuro.\n\nPela primeira vez deixamos claro que queremos esperar o tempo certo para viver um namoro cristão.\n\nBrincamos:\n\"Falta um ano e dois meses.\"",
+    photo: "fotos/foto37.jpg"
+  },
+  {
+    date:  "7 de Junho de 2026",
+    title: "Eu Consegui Me Abrir",
+    body:  "Pela primeira vez contei algo que normalmente guardaria para mim.\n\nEla me ouviu.\n\nEla ficou.\n\nE naquele dia tive ainda mais certeza.",
+    photo: "fotos/foto38.JPG"
+  },
+  {
+    date:  "7 de Junho de 2026",
+    title: "Pessoalmente",
+    body:  "Foi a primeira vez que dissemos \"eu te amo\" olhando um para o outro.",
+    photo: "fotos/foto39.jpeg"
+  },
+  {
+    date:  "Jogo do Brasil",
+    title: "Um Jogo Qualquer",
+    body:  "Assistimos juntos ao primeiro jogo do Brasil.\n\nConversamos o tempo inteiro.\n\nTiramos nossa melhor foto até então.\n\nE mais uma vez ela não conseguiu bater meu recorde no Block Blast.",
+    photo: "fotos/foto40.PNG"
+  },
+  {
+    date:  "19 de Junho de 2026",
+    title: "O Primeiro Abraço",
+    body:  "No meu aniversário ela chegou, me abraçou e me entregou um presente.\n\nFoi o nosso primeiro abraço de verdade.",
+    photo: "fotos/foto41.jpg"
+  },
+  {
+    date:  "19 de Junho de 2026",
+    title: "O Melhor Presente",
+    body:  "Ela fez uma carta cheia de detalhes sobre mim.\n\nNunca ninguém tinha feito algo parecido.\n\nEu não sabia como agradecer.",
+    photo: "fotos/foto42.jpg"
+  },
+  {
+    date:  "19 de Junho de 2026",
+    title: "Como se Já Fosse da Família",
+    body:  "Vi ela brincando com meu priminho.\n\nConversando com minha avó.\n\nRindo com minha família.\n\nE percebi que ela parecia pertencer àquele lugar.",
+    photo: "fotos/foto43.JPG"
+  },
+  {
+    date:  "19 de Junho de 2026",
+    title: "Um Sonho Realizado",
+    body:  "Jogamos juntos.\n\nConversamos.\n\nFicamos abraçados.\n\nEla dormiu no meu ombro.\n\nEu fiz carinho nela.\n\nE por alguns instantes parecia que o mundo inteiro tinha desacelerado.",
+    photo: "fotos/foto40.PNG"
+  },
+  {
+    date:  "18 de Julho de 2026",
+    title: "Um Sábado Inesquecível",
+    body:  "Colocamos Deus em primeiro lugar.\n\nDepois vieram um pneu furado, boliche, fliperama, muitas fotos, Termo e inúmeras risadas.\n\nMais uma noite que provou que qualquer lugar fica especial quando estamos juntos.",
+    photo: "fotos/foto46.jpg"
+  },
+  {
+    date:  "6 de Agosto de 2026",
+    title: "O Aniversário Dela",
+    body:  "Mandei um texto e uma postagem assim que bateu meia-noite.\n\nEla chorou. De novo.\n\nNo dia da festa, veio um temporal no meio da feira e, por alguns minutos, eu não conseguia encontrar ela.\n\nFiquei com medo. Muito medo.\n\nAté descobrir que estava tudo bem.\n\nNem tudo precisa sair como planejado para ser inesquecível.",
+    photo: "fotos/foto47.jpg"
+  },
+  {
+    date:  "A comemoração",
+    title: "O Colar",
+    body:  "Levei o livro, um porta-joias e um colar.\n\nQuando ela viu o colar, pareceu que as palavras tinham faltado.\n\nForam três abraços.\n\nDesde aquele dia, toda vez que a encontro, ela está usando ele.",
+    photo: "fotos/foto48.jpg"
+  },
+  {
+    date:  "Dia 29",
+    title: "Tocando na Sede",
+    body:  "Toquei guitarra na sede pela primeira vez.\n\nE, quando ela chegou, meu coração acelerou de novo.\n\nMesmo depois de tudo que já vivemos, mesmo vendo ela toda semana.\n\nAcho que nunca vou me acostumar — e nem quero.",
+    photo: "fotos/foto49.jpg"
+  },
+  {
+    date:  "O Corujão",
+    title: "A Noite Que Não Acabava",
+    body:  "Ficamos acordados praticamente a noite inteira, cuidando dos adolescentes no Corujão dos Conectes.\n\nSeis da manhã, e ainda queríamos continuar conversando.\n\nTalvez esse seja um dos sinais mais bonitos de todos: quando estar junto nunca parece suficiente.",
+    photo: "fotos/foto50.jpg"
+  },
+  {
+    date:  "478 dias depois",
+    title: "Obrigado por Tudo Isso",
+    body:  "Escrevi um capítulo inteiro chorando.\n\nMas não de tristeza — de gratidão.\n\nPorque, depois de tudo, ainda não consigo acreditar completamente que estou vivendo isso.\n\nEu te amo mais hoje do que ontem, e amanhã vou encontrar ainda mais motivos para te amar.",
+    photo: "fotos/foto51.jpg"
+  },
+
+];
+// ─────────────────────────────────────────────
+
+function build() {
+  const tl    = document.querySelector('.tl');
+  const spine = tl.querySelector('.tl-spine');
+
+  EVENTS.forEach((ev, i) => {
+    const item = document.createElement('div');
+    item.className = 'tl-item';
+
+    item.innerHTML = `
+      <div class="tl-dot"></div>
+      <div class="tl-card${ev.photo ? ' has-photo' : ''}" data-i="${i}">
+        <div class="tl-card-bg"${ev.photo ? ` style="background-image:url('${ev.photo}')"` : ''}></div>
+        <div class="tl-card-overlay"></div>
+        <div class="tl-card-placeholder">
+          <div class="placeholder-icon">
+            <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+          </div>
+          <span class="placeholder-label">sem foto</span>
+        </div>
+        <div class="tl-card-content">
+          <p class="tl-date">${ev.date}</p>
+          <p class="tl-name">${ev.title}</p>
+          <p class="tl-open">toque para ver</p>
+        </div>
+      </div>`;
+
+    tl.insertBefore(item, spine);
+
+    item.querySelector('.tl-card').addEventListener('click', () => openSheet(i));
+  });
+}
+
+function openSheet(i) {
+  const ev = EVENTS[i];
+  document.getElementById('sDate').textContent  = ev.date;
+  document.getElementById('sTitle').textContent = ev.title;
+  document.getElementById('sBody').textContent  = ev.body;
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('sheet').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeSheet() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('sheet').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('overlay').addEventListener('click', closeSheet);
+
+let sy = 0;
+const sheet = document.getElementById('sheet');
+sheet.addEventListener('touchstart', e => { sy = e.touches[0].clientY; }, { passive: true });
+sheet.addEventListener('touchend',   e => { if (e.changedTouches[0].clientY - sy > 80) closeSheet(); }, { passive: true });
+
+function observe() {
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.tl-item').forEach(el => io.observe(el));
+}
+
+build();
+observe();
+</script>
+</body>
+</html>
